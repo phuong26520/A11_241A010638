@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.A11Dialog" parent="Theme.Material3.DayNight">
+    </style>
+
+    <style name="Theme.A11Dialog" parent="Base.Theme.A11Dialog" />
+</resources>
