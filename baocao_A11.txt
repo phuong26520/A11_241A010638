@@ -1,0 +1,30 @@
+BÁO CÁO LAB A11 - DIALOG, TOAST VÀ MENU
+Nguyễn Hoài Phương - MSSV 241A010638 - Lớp LTTTBDD - INT4211
+
+NỘI DUNG CỘT QUAN SÁT - BẢNG 8 KỊCH BẢN KIỂM THỬ
+
+1. Mở app, nhìn thanh tiêu đề: Thanh tiêu đề hiện tiêu đề app, biểu tượng dấu + (Thêm món) và nút menu ba chấm ở góc phải.
+2. Mở menu ba chấm: Hiện các mục Sắp xếp theo tên, Sắp xếp theo giá, Lọc theo mức giá và Xóa tất cả.
+3. Chọn Sắp xếp theo giá: Danh sách món ăn được xếp lại theo giá tăng dần (từ 25.000 đ lên 50.000 đ) và hiện Toast "Đã sắp xếp theo giá tăng dần".
+4. Giữ lâu một dòng: Context menu hiện lên với tiêu đề trên cùng là đúng tên món ăn của dòng vừa giữ lâu, bên dưới có hai mục Sửa món và Xóa.
+5. Chọn Xóa trong context menu: Hiện hộp thoại Xác nhận xóa với câu hỏi nêu đúng tên món đó ("Bạn có chắc muốn xóa ... khỏi thực đơn?").
+6. Bấm Hủy trong hộp thoại: Hộp thoại đóng lại, không xóa món nào, danh sách vẫn giữ nguyên.
+7. Bấm Xóa rồi bấm HOÀN TÁC: Món ăn biến mất và hiện Snackbar ở cạnh dưới; khi bấm HOÀN TÁC thì món ăn quay trở lại đúng vị trí cũ chứ không nhảy xuống cuối danh sách.
+8. Mở dialog Sửa, xóa trắng ô tên rồi bấm Lưu: Ô tên món hiện thông báo lỗi "Chưa nhập tên món", hộp thoại vẫn giữ nguyên trên màn hình chứ không bị đóng mất.
+
+TRẢ LỜI 5 CÂU HỎI ÔN TẬP
+
+1. Khi nào dùng Toast, khi nào Snackbar, khi nào AlertDialog?
+Dùng Toast khi chỉ cần thông báo ngắn gọn một việc nhỏ đã xong (như đã sắp xếp) và không cần người dùng bấm gì thêm. Dùng Snackbar khi việc vừa làm có thể cần hoàn tác ngay qua một nút bấm (như xóa món kèm nút HOÀN TÁC) mà không muốn chặn màn hình. Dùng AlertDialog khi cần chặn thao tác để hỏi xác nhận trước một việc quan trọng/nguy hiểm hoặc khi cần người dùng nhập thông tin.
+
+2. Làm sao biết người dùng vừa giữ lâu dòng nào?
+Trong onCreateContextMenu và onContextItemSelected, ép kiểu đối tượng MenuInfo (lấy từ item.getMenuInfo()) sang AdapterView.AdapterContextMenuInfo, rồi đọc thuộc tính info.position để lấy đúng chỉ số dòng vừa được giữ lâu trong ListView.
+
+3. Vì sao phải gán lại listener sau khi gọi show()?
+Vì nút Positive tạo qua setPositiveButton mặc định luôn tự đóng hộp thoại sau khi bấm. Gán lại OnClickListener cho dialog.getButton(AlertDialog.BUTTON_POSITIVE) sau khi đã gọi dialog.show() giúp chặn hành vi tự đóng đó, để khi người dùng nhập thiếu hoặc sai dữ liệu thì hộp thoại vẫn mở và hiện lỗi tại ô nhập.
+
+4. Hoàn tác đúng cách cần giữ lại những gì?
+Cần giữ lại cả đối tượng dữ liệu vừa bị xóa (MonAn daXoa) lẫn vị trí ban đầu của nó trong danh sách (int viTri), để khi bấm Hoàn tác thì chèn lại bằng danhSach.add(viTri, daXoa) đúng vào vị trí cũ.
+
+5. Vì sao dòng return super.onOptionsItemSelected(item); ở cuối lại quan trọng?
+Vì ngoài các mục menu do ta tự thêm, thanh tiêu đề còn có thể có các mục của hệ thống hoặc của lớp cha (ví dụ nút mũi tên Back/Up trên ActionBar). Gọi super.onOptionsItemSelected(item) ở cuối giúp nhường các mục mà ta không tự xử lý cho hệ thống xử lý bình thường.
